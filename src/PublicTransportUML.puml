@@ -1,0 +1,73 @@
+@startuml
+
+class PublicTransportManager{
+- vehicles : List<Vehicle>
+- routes : List<Route>
+
++ getVehiclesOfSpecificTypeWithSameStatus(VehicleType, Status) : int
++ getRoute() : List<Route>
+}
+class Route {
+- routeName : String
+- vehicleInOperation : List <Vehicle>
+- stations : List<Station>
+
++ addStation() : void
++ addVehicle() : void
+}
+
+class Station {
+-name : String
+}
+abstract class Vehicle{
+- id : UUID
+- licensePlateNumber : UUID
+- maxCapacityPassengers : int
+- status : Status
+- fuelType : FuelType
+- serviceDate : LocalDate
+- vehicleType : VehicleType
+
++ setStatus() : void
+}
+
+class Bus extends Vehicle{
+- pollutionIndicator : int
+
+}
+
+class TrolleyBuse extends Vehicle {
+}
+
+class Tram extends Vehicle{
+- yearsInService : int
+}
+
+enum VehicleType{
+BUS,
+TROLLEYBUSE,
+TRAM
+}
+
+enum Status{
+NEED_REPAIR,
+IN_OPERATION,
+FOR_SCRAP
+}
+
+enum FuelType{
+ELECTRIC,
+GAS,
+HYBRID
+}
+
+Vehicle -- VehicleType
+PublicTransportManager --> Route
+PublicTransportManager --> Vehicle
+Vehicle -- FuelType
+Vehicle -- Status
+Route --> Station
+Vehicle <-- Route
+
+
+@enduml
